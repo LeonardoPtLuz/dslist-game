@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.myproject.dslist.dto.GameDTO;
 import com.myproject.dslist.dto.GameMinDTO;
 import com.myproject.dslist.entities.Game;
+import com.myproject.dslist.projections.GameMinProjection;
 import com.myproject.dslist.repositories.GameRepository;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -33,5 +34,13 @@ public class GameService {
         //List<GameMinDTO> dto  = result.stream().map(x -> new GameMinDTO(x)).toList();
         return result.stream().map(x -> new GameMinDTO(x)).toList();
     }
+
+
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> findByList(Long listId) {
+        List<GameMinProjection> result = gameRepository.searchByList(listId);
+        return result.stream().map(x -> new GameMinDTO(x)).toList();
+    }
+
 
 }
